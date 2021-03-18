@@ -5,6 +5,7 @@ from collections import defaultdict
 import numpy as np
 dataset = pd.read_csv('count_observation_upload.csv')
 df = pd.DataFrame(dataset)
+# We are insterested in only videos id and view count values so we need 2 and 13 columns in the csv file.
 cols = [2,13]
 df = df[df.columns[cols]]
 df.fillna(0, inplace=True)
@@ -18,14 +19,16 @@ features=[]
 for i in d.values():
 	features.append(i)
 features=np.array(features)
-print(features.shape)
-print(type(features))
+
+# Normalizing view count values
 features=features/features.sum(axis=0)
 features[features < 0] = 0
 for i in features:
-	print(i[:10])
+	print(i)
+
+# Shapre of features matrix is 1611 X 694. Which means 1611 videos over 694 time series values.
+print(len(features),len(features[0]))
+
 
 	
-	
-#[ 5881096. 15129395.  4786621.  8860295.  8254700. 11275645. 12121089. 12137170. 13875160. 12400016.]
-#features=np.around(features, decimals=5)
+
